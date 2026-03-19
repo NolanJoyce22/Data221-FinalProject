@@ -82,5 +82,6 @@ import numpy as np
 mse = neural_network_model.evaluate(features_test, labels_test)
 rmse = np.sqrt(mse)
 
+#print results to user
 print(f"rmse: {rmse}")
 print(f"mse: {mse}")
