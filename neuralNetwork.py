@@ -22,6 +22,9 @@ xEncoded=pd.get_dummies(x, columns=categoricalColumns, drop_first=True)
 #verify encoded data has no missing values
 print(xEncoded.isnull().sum())
 
+
+#   ***     Train-Test Split     ***
+
 from sklearn.model_selection import train_test_split
 #make train-test split
     #Set test split to 0.20, consistent with other ML models
@@ -35,8 +38,11 @@ scaler=StandardScaler()
 features_train=scaler.fit_transform(features_train)
 features_test=scaler.transform(features_test)
 
+
+#   ***     Neural Network Model Implementation     ***
 import tensorflow as tf
 tf.random.set_seed(42)
+
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, InputLayer
@@ -75,6 +81,8 @@ neural_network_model.compile(loss='mse', metrics=['mae'], optimizer='adam')
 #fit model to training set, epochs to 30 to ensure consistent data
 neural_network_model.fit(features_train, labels_train, epochs=30, validation_split=0.2)
 
+
+#   ***     Model Interpretation     ***
 #get predictions
 predictions = neural_network_model.predict(features_test)
 
