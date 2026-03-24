@@ -40,6 +40,7 @@ features_test=scaler.transform(features_test)
 
 
 #   ***     Neural Network Model Implementation     ***
+
 import tensorflow as tf
 tf.random.set_seed(42)
 
@@ -88,6 +89,8 @@ neural_network_model.fit(features_train, labels_train, epochs=30, validation_spl
 
 
 #   ***     Model Interpretation     ***
+
+
 #get predictions
 predictions = neural_network_model.predict(features_test)
 
