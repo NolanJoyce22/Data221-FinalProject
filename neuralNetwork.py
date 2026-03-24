@@ -87,12 +87,15 @@ neural_network_model.fit(features_train, labels_train, epochs=30, validation_spl
 predictions = neural_network_model.predict(features_test)
 
 import numpy as np
+from sklearn.metrics import r2_score
 
 #evaluate mse, rmse on testing set
 loss, mae = neural_network_model.evaluate(features_test, labels_test)
 rmse = np.sqrt(loss)
+r2= r2_score(labels_test, predictions.flatten())
 
 #print results to user
 print(f"RMSE: {rmse}")
 print(f"MSE: {loss}")
 print(f"MAE: {mae}")
+print(f"R-SQUARED: {r2}")
