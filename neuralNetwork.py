@@ -70,6 +70,11 @@ neural_network_model.add(second_hidden_layer)
 third_hidden_layer = Dense(16, activation='relu')
 neural_network_model.add(third_hidden_layer)
 
+#create and add forth hidden layer
+    #relu activation to ensure optimization
+fourth_hidden_layer = Dense(8, activation='relu')
+neural_network_model.add(fourth_hidden_layer)
+
 #create and add output layer
 output_layer = Dense(1)
 neural_network_model.add(output_layer)
