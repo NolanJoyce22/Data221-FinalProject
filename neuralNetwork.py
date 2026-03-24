@@ -95,7 +95,7 @@ rmse = np.sqrt(loss)
 r2= r2_score(labels_test, predictions.flatten())
 
 #print results to user
-print(f"RMSE: {rmse}")
+print(f"\nRMSE: {rmse}")
 print(f"MSE: {loss}")
 print(f"MAE: {mae}")
 print(f"R-SQUARED: {r2}")
