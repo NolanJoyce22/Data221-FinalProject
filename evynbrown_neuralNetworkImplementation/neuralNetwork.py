@@ -108,6 +108,4 @@ print(f"MSE: {loss}")
 print(f"MAE: {mae}")
 print(f"R-SQUARED: {r2}")
 
-#hello world
-#hello
-#hello
+#test
