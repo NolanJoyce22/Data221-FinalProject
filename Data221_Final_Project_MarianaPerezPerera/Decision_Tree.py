@@ -6,6 +6,7 @@ from sklearn.metrics import accuracy_score, mean_squared_error
 import pandas as pd
 from sklearn.metrics import r2_score
 import numpy as np
+import matplotlib.pyplot as plt
 
 #loading in the dataset:
 student_alcohol_df = pd.read_csv('student-mat.csv')
