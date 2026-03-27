@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #loading in the dataset:
-student_alcohol_df = pd.read_csv('student-mat.csv')
+student_alcohol_df = pd.read_csv(r'C:\Users\maria\Documents\School\Data221\Data 221-Final Project\student-mat.csv')
 
 #selecting the propper/key features we are using:
 selected_features = [
@@ -97,3 +97,11 @@ importance = pd.Series(
 
 #printing the importance:
 print("\nThe feature importance:\n", importance)
+
+#Plotting the importance features on a bar graph:
+importance.plot(kind= 'bar', color="pink")
+plt.title("Decision Tree Feature Importance")
+plt.xlabel("Features")
+plt.ylabel("Importance Score")
+plt.xticks(rotation= 45)
+plt.show()
