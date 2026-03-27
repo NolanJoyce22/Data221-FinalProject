@@ -3,6 +3,7 @@ from pyexpat import model
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import accuracy_score, mean_squared_error
+from sklearn.tree import plot_tree
 import pandas as pd
 from sklearn.metrics import r2_score
 import numpy as np
