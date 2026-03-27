@@ -118,6 +118,8 @@ plt.plot([y.min(), y.max()], [y.min(), y.max()], color='green')
 plt.show()
 
 #Creating a Decision Tree Visualization:
-plt.figure(figsize = (30,20))
-plot_tree(decision_tree_regressor, feature_names=x.columns, filled=True)
+plt.figure(figsize = (25,15))
+plot_tree(decision_tree_regressor, feature_names=x.columns, filled=True,
+          rounded=True, max_depth=2, fontsize=10)
+plt.title("Decision Tree Visualization")
 plt.show()
