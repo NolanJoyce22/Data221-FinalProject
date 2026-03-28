@@ -17,7 +17,7 @@ df=df.drop(columns=["G1", "G2"])
 
 #--------------------------------------------
 #Feature selection
-#-------------------------------------------
+#--------------------------------------------
 
 #Select only the features relevent to our research question
 selected_features= ["Medu", "Fedu", "Mjob", "Fjob", #Parents background
