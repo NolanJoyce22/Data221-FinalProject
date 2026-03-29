@@ -99,6 +99,25 @@ print("R2 Score:", r2)
 
 print("Sample Predictions:", y_pred[:5])
 
+#-------------------Scatter plot------------------------
+#shows the error (actual-predicted) for each guess
+residuals=y_test-y_pred
+
+plt.figure(figsize=(8,6))
+plt.scatter(y_pred, residuals, alpha=0.6, color='purple')
+
+#horizontal line at 0 indicating no error
+plt.axhline(y=0, color='black', linestyle='-')
+
+plt.xlabel("Predicted Values (G3)")
+plt.ylabel("Residuals (Actual- Predicted)")
+plt.title("Residual Plot (KNN Regression Model")
+plt.show()
+
+
+
+
+
 #------------Graph comparison-------------------
 
 plt.figure(figsize=(8,6))
