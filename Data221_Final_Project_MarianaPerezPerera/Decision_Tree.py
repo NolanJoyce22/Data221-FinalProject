@@ -3,12 +3,14 @@ from pyexpat import model
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import accuracy_score, mean_squared_error
+from sklearn.tree import plot_tree
 import pandas as pd
 from sklearn.metrics import r2_score
 import numpy as np
+import matplotlib.pyplot as plt
 
 #loading in the dataset:
-student_alcohol_df = pd.read_csv('student-mat.csv')
+student_alcohol_df = pd.read_csv(r'C:\Users\maria\Documents\School\Data221\Data 221-Final Project\student-mat.csv')
 
 #selecting the propper/key features we are using:
 selected_features = [
@@ -96,3 +98,28 @@ importance = pd.Series(
 
 #printing the importance:
 print("\nThe feature importance:\n", importance)
+
+#Plotting the importance features on a bar graph:
+importance.plot(kind= 'bar', color="pink")
+plt.title("Decision Tree Feature Importance")
+plt.xlabel("Features")
+plt.ylabel("Importance Score")
+plt.xticks(rotation= 45)
+plt.show()
+
+#Plotting the predicted vs actual results on a scatter plot:
+plt.scatter(y_test, test_predictions, color='pink')
+plt.xlabel('Actual G3')
+plt.ylabel('Predicted G3')
+plt.title("The Actual vs Predicted Grades")
+
+#plotting the line of perfection:
+plt.plot([y.min(), y.max()], [y.min(), y.max()], color='green')
+plt.show()
+
+#Creating a Decision Tree Visualization:
+plt.figure(figsize = (25,15))
+plot_tree(decision_tree_regressor, feature_names=x.columns, filled=True,
+          rounded=True, max_depth=2, fontsize=10)
+plt.title("Decision Tree Visualization")
+plt.show()

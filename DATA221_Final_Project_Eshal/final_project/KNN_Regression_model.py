@@ -9,7 +9,7 @@ df= pd.read_csv("student-mat.csv")
 
 #------------------------------------------
 #dropping the leakage features
-#----------------------------------------
+#------------------------------------------
 
 #removing two columns from dataframe: G1 and G2 (these are earlier grades and highly correlated with G3)
 #   since keeping them would cause data leakage and inflate model preformance
@@ -17,7 +17,7 @@ df=df.drop(columns=["G1", "G2"])
 
 #--------------------------------------------
 #Feature selection
-#-------------------------------------------
+#--------------------------------------------
 
 #Select only the features relevent to our research question
 selected_features= ["Medu", "Fedu", "Mjob", "Fjob", #Parents background
