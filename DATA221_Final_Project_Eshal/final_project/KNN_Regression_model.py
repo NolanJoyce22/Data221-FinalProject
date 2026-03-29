@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsRegressor
@@ -21,9 +22,9 @@ df=df.drop(columns=["G1", "G2"])
 
 #Select only the features relevent to our research question
 #features added are absences, studytime and schoolsup to make the features more 'Academic'
-selected_features= ["Medu", "Fedu", "Mjob", "Fjob", #Parents background
-                    "address", "traveltime", "studytime","failures","absences", "internet", #Living conditions
-                    'famsup', "schoolsup", "famrel"] #Family demographics
+selected_features= ["Medu", "Fedu", "Mjob", "Fjob",
+                    "address", "traveltime", "studytime","failures","absences", "internet",
+                    'famsup', "schoolsup", "famrel"]
 
 #split features x, and target y
 x=df[selected_features] #input variables (predictors)
@@ -97,4 +98,21 @@ print("RMSE:", rmse)
 print("R2 Score:", r2)
 
 print("Sample Predictions:", y_pred[:5])
+
+#------------Graph comparison-------------------
+
+plt.figure(figsize=(8,6))
+#creating scatter plot
+plt.scatter(y_test, y_pred, alpha=0.6, color='blue')
+
+#creating the diagonal 'perfect prediction' line
+plt.plot([y_test.min(), y_test.max()],
+         [y_test.min(), y_test.max()],
+         color='red', linestyle='--')
+
+#labels and title
+plt.xlabel("Actual Values (G3)")
+plt.ylabel("Predicted Values (G3)")
+plt.title("Actual vs Predicted (KNN Regression Model)")
+plt.show()
 
