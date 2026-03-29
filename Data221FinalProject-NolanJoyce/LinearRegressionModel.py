@@ -1,9 +1,12 @@
 import pandas as pd
+from keras.src.losses import mean_absolute_error
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score, mean_squared_error
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import mean_absolute_error
 import matplotlib.pyplot as plt
+import numpy as np
 # Load data set
 student_alcohol_data = pd.read_csv(r"C:\Data 221\Data221 Final Project Nolan Joyce\student-mat.csv")
 # Create feature matrix
@@ -32,8 +35,16 @@ model.fit(x_train_scaled, y_train)
 y_pred = model.predict(x_test_scaled)
 
 print(y_pred)
+# Overall performance
 print("R²:", r2_score(y_test, y_pred))
+# Squared error, penalizes big mistakes
 print("MSE:", mean_squared_error(y_test, y_pred))
+# Root MSE, same units as grades
+print("RMSE:", np.sqrt(mean_squared_error(y_test, y_pred)))
+# Average absolute error
+print("MAE:", mean_absolute_error(y_test, y_pred))
+
+
 print("Intercept:", model.intercept_)
 print("Coefficients:", model.coef_)
 
@@ -63,4 +74,4 @@ plt.show()
 # Model struggles to capture extreme outcomes.
 
 
-# test
+
