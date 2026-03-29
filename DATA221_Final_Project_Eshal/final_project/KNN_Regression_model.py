@@ -20,9 +20,10 @@ df=df.drop(columns=["G1", "G2"])
 #--------------------------------------------
 
 #Select only the features relevent to our research question
+#features added are absences, studytime and schoolsup to make the features more 'Academic'
 selected_features= ["Medu", "Fedu", "Mjob", "Fjob", #Parents background
-                    "address", "Pstatus", "traveltime", "internet", #Living conditions
-                    'famsup', "famsize", "famrel"] #Family demographics
+                    "address", "traveltime", "studytime","failures","absences", "internet", #Living conditions
+                    'famsup', "schoolsup", "famrel"] #Family demographics
 
 #split features x, and target y
 x=df[selected_features] #input variables (predictors)
@@ -34,7 +35,8 @@ y=df["G3"] #target variable (final grade)
 
 
 #Indentifying categorical columns manually
-categorical_cols= ['Mjob', 'Fjob', 'address', "Pstatus", "famsup", "internet", "famsize"]
+#i removed Pstatus and famsize and instead added schoolsup to make the model more lean
+categorical_cols= ['Mjob', 'Fjob', 'address', "famsup", "internet", "schoolsup"]
 
 #Apply one-hot encoding:
 #   this converts categorical values into binary (0/1) columns
@@ -72,7 +74,8 @@ x_test=scaler.transform(x_test)
 #train KNN model
 #---------------------------------------------
 
-knn= KNeighborsRegressor(n_neighbors=5)
+#increased the number of neighbors
+knn= KNeighborsRegressor(n_neighbors=15)
 knn.fit(x_train,y_train)
 
 #--------------------------------------------
