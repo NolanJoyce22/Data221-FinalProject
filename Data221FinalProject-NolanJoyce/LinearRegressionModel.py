@@ -41,7 +41,6 @@ print("Coefficients:", model.coef_)
 #---------------------------------------------------------------
 # Visual
 
-
 # Scatter plot: Actual Vs Predicted
 plt.figure()
 plt.scatter(y_test, y_pred, alpha = 0.6)
