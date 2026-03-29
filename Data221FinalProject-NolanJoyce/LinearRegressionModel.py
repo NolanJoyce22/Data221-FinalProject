@@ -3,23 +3,17 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score, mean_squared_error
 from sklearn.preprocessing import StandardScaler
-
+import matplotlib.pyplot as plt
 # Load data set
-student_alcohol_data = pd.read_csv("student-mat.csv")
+student_alcohol_data = pd.read_csv(r"C:\Data 221\Data221 Final Project Nolan Joyce\student-mat.csv")
 # Create feature matrix
 x = student_alcohol_data[["address", "famsize", "Pstatus", "Medu", "Fedu", "Mjob", "Fjob", "traveltime", "famsup",
                           "internet", "famrel"]]
 # Create target vector
 y = student_alcohol_data["G3"]
-
-# Map features with categorical feature to a numerical variable
-x["address"] = x["address"].map({"U":1, "R":0})
-x["famsize"] = x["famsize"].map({"LE3":1, "GT3":0})
-x["Pstatus"] = x["Pstatus"].map({"T":1, "A":0})
-x["famsup"] = x["famsup"].map({"yes":1, "no":0})
-x["internet"] = x["internet"].map({"yes":1, "no":0})
-# One-Hot code features with more than two categorical variables
-x = pd.get_dummies(x, columns=["Mjob", "Fjob"], drop_first=True)
+# convert categorical data into numerical columns so that the features are not treated as having order or ranking
+#
+x = pd.get_dummies(x, drop_first=True)
 
 # Create train-test-split for model with 80% training and 20% testing
 x_train, x_test, y_train, y_test = train_test_split(x,y,test_size = 0.2, random_state = 42)
@@ -40,8 +34,34 @@ y_pred = model.predict(x_test_scaled)
 print(y_pred)
 print("R²:", r2_score(y_test, y_pred))
 print("MSE:", mean_squared_error(y_test, y_pred))
+print("Intercept:", model.intercept_)
+print("Coefficients:", model.coef_)
 
-# test commit
+
+#---------------------------------------------------------------
+# Visual
+
+
+# Scatter plot: Actual Vs Predicted
+plt.figure()
+plt.scatter(y_test, y_pred, alpha = 0.6)
+
+# Perfect prediction line (y = x)
+plt.plot([y_test.min(), y_test.max()],
+         [y_test.min(), y_test.max()],
+         linestyle="--")
+
+# Labels and title
+plt.xlabel("Actual Values (G3)")
+plt.ylabel("Predicted Values (G3)")
+plt.title("actual vs Predicted (Linear Regression)")
+
+plt.show()
+
+# Low actual values predictions are too high.
+# High actual values predictions are too low.
+# Regression towards the mean.
+# Model struggles to capture extreme outcomes.
 
 
 
