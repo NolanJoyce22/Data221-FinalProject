@@ -15,7 +15,6 @@ x = student_alcohol_data[["address", "famsize", "Pstatus", "Medu", "Fedu", "Mjob
 # Create target vector
 y = student_alcohol_data["G3"]
 # convert categorical data into numerical columns so that the features are not treated as having order or ranking
-#
 x = pd.get_dummies(x, drop_first=True)
 
 # Create train-test-split for model with 80% training and 20% testing
@@ -72,6 +71,26 @@ plt.show()
 # High actual values predictions are too low.
 # Regression towards the mean.
 # Model struggles to capture extreme outcomes.
+
+
+# Residual plot
+residuals = y_test - y_pred
+
+plt.figure()
+plt.scatter(y_pred, residuals, alpha=0.6)
+
+# Horizontal line at 0
+plt.axhline(y=0)
+
+plt.xlabel("Predicted Values")
+plt.ylabel("Residuals (Actual - Predicted)")
+plt.title("Residual Plot")
+
+plt.show()
+
+# The model overestimates higher values
+# The model underestimates lower values
+# The model is not finding any patterns in the data
 
 
 
