@@ -56,7 +56,6 @@ decision_tree_regressor = DecisionTreeRegressor(
     min_samples_split=10,
     random_state=42
 )
-
 #training the model:
 decision_tree_regressor.fit(x_train, y_train)
 
@@ -85,15 +84,15 @@ test_r2 = r2_score(y_test, test_predictions)
 #Mean absolute error on testing data:
 test_mae = mean_absolute_error(y_test, test_predictions)
 
-#printing each one:
+#printing each one (for the testing data only):
 #squared error:
-print("Test squared error: ", test_mse)
+print("Mean squared error (MSE): ", test_mse)
 #root MSE: (will penalize big errors)
-print("Test mean squared error: ", test_rmse)
+print("Root mean squared error (RMSE): ", test_rmse)
 #average error size:
-print("Test mean absolute error: ", test_mae)
+print("Mean absolute error (MAE): ", test_mae)
 #the overall performance:
-print("Test R²: ", test_r2)
+print("R²: ", test_r2)
 
 #The model overall is worse at predicting the average grade
 
