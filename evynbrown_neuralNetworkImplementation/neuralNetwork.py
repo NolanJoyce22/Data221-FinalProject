@@ -5,7 +5,8 @@ import pandas as pd
 #read file
 dataset=pd.read_csv("student-mat.csv")
 #select features
-selectedFeatures=['Fjob', 'Mjob', 'Medu', 'Fedu', 'address', 'traveltime','famsup', 'famsize',  'internet', 'Pstatus', 'schoolsup']
+selectedFeatures=['Fjob', 'Mjob', 'Medu', 'Fedu', 'address', 'traveltime',
+                  'famsup', 'famsize',  'internet', 'Pstatus', 'schoolsup']
 
 #get features (x) and target label (y)
 x=dataset[selectedFeatures]
@@ -16,7 +17,8 @@ print(x.isnull().sum())
 
 
 #Encoding categorical data to binary
-categoricalColumns=['address', 'famsize', 'Pstatus','Mjob','Fjob', 'famsup', 'internet', 'schoolsup']
+categoricalColumns=['address', 'famsize', 'Pstatus','Mjob','Fjob',
+                    'famsup', 'internet', 'schoolsup']
 xEncoded=pd.get_dummies(x, columns=categoricalColumns, drop_first=True)
 
 #verify encoded data has no missing values
@@ -29,7 +31,8 @@ from sklearn.model_selection import train_test_split
 #make train-test split
     #Set test split to 0.20, consistent with other ML models
     #random state=42 to ensure shuffling and equal train test split
-features_train, features_test, labels_train, labels_test=train_test_split(xEncoded, y,test_size=0.20, random_state=42)
+features_train, features_test, labels_train, labels_test=(train_test_split(
+    xEncoded, y,test_size=0.20, random_state=42))
 
 #normalize features
     #normalizing features is key for neural networks to ensure optimization and equal treatment of features
@@ -109,4 +112,49 @@ print(f"MAE: {mae}")
 print(f"R-SQUARED: {r2}")
 
 
-#TEST
+#   ***     Model Visualizations     ***
+
+import matplotlib.pyplot as plt
+
+#flatten predictions
+predictions_flat = predictions.flatten()
+
+
+#Scatter plot to represent predicted labels vs actual labels
+plt.scatter(labels_test, predictions, color='navy')
+
+#set min and max graph values
+min_val = min(labels_test.min(), predictions_flat.min())
+max_val = max(labels_test.max(), predictions_flat.max())
+
+#plot a perfect prediction line
+plt.plot([min_val, max_val],
+         [min_val, max_val], color='hotpink',
+         linestyle='--', label='Perfect Prediction')
+
+#labels and title for scatter plot
+plt.xlabel("Actual Values (G3)")
+plt.ylabel("Predicted Values")
+plt.title("Actual vs Predicted Grades (Neural Network Model)")
+
+plt.legend()
+plt.show()
+
+
+#Residual plot to visualize error in predictions
+
+#compute residuals
+residuals = labels_test - predictions_flat
+#create scatter plot where x=predicted values, y=residuals
+plt.scatter(labels_test, residuals, color='navy')
+
+#plot line at y=0 to represent perfect predictions (no error)
+plt.axhline(y=0, color='hotpink',
+         linestyle='--')
+
+#labels and titles for residual plot
+plt.ylabel("Residuals (actual - predicted)")
+plt.xlabel("Predicted Values")
+plt.title("Residual Plot (Neural Network Model)")
+plt.show()
+
