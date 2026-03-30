@@ -114,47 +114,65 @@ print(f"R-SQUARED: {r2}")
 
 #   ***     Model Visualizations     ***
 
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt1
 
 #flatten predictions
 predictions_flat = predictions.flatten()
 
 
-#Scatter plot to represent predicted labels vs actual labels
-plt.scatter(labels_test, predictions, color='navy')
+# #Scatter plot to represent predicted labels vs actual labels
+plt1.scatter(labels_test, predictions, color='navy')
 
 #set min and max graph values
 min_val = min(labels_test.min(), predictions_flat.min())
 max_val = max(labels_test.max(), predictions_flat.max())
 
 #plot a perfect prediction line
-plt.plot([min_val, max_val],
-         [min_val, max_val], color='hotpink',
-         linestyle='--', label='Perfect Prediction')
+plt1.plot([min_val, max_val],
+          [min_val, max_val], color='hotpink',
+          linestyle='--', label='Perfect Prediction')
 
 #labels and title for scatter plot
-plt.xlabel("Actual Values (G3)")
-plt.ylabel("Predicted Values")
-plt.title("Actual vs Predicted Grades (Neural Network Model)")
+plt1.xlabel("Actual Values (G3)")
+plt1.ylabel("Predicted Values")
+plt1.title("Actual vs Predicted Grades (Neural Network Model)")
 
-plt.legend()
-plt.show()
+plt1.legend()
+plt1.show()
 
 
 #Residual plot to visualize error in predictions
+import matplotlib.pyplot as plt2
 
 #compute residuals
 residuals = labels_test - predictions_flat
 #create scatter plot where x=predicted values, y=residuals
-plt.scatter(labels_test, residuals, color='navy')
+plt2.scatter(labels_test, residuals, color='navy')
 
 #plot line at y=0 to represent perfect predictions (no error)
-plt.axhline(y=0, color='hotpink',
-         linestyle='--')
+plt2.axhline(y=0, color='hotpink',linestyle='--')
 
 #labels and titles for residual plot
-plt.ylabel("Residuals (actual - predicted)")
-plt.xlabel("Predicted Values")
-plt.title("Residual Plot (Neural Network Model)")
-plt.show()
+plt2.ylabel("Residuals (actual - predicted)")
+plt2.xlabel("Predicted Values")
+plt2.title("Residual Plot (Neural Network Model)")
+plt2.show()
 
+
+#Loss graph to represent model fit
+
+import matplotlib.pyplot as plt3
+
+#assign variable to model fit
+history = neural_network_model.fit(features_train, labels_train, epochs=30, validation_split=0.2)
+#plot training loss over each epoch
+plt3.plot(history.history['loss'], label='Training Loss', color='navy')
+#plot validation loss over each epoch
+plt3.plot(history.history['val_loss'], label='Validation Loss', color='hotpink')
+
+#labels and titles for loss plot
+plt3.xlabel("Epochs")
+plt3.ylabel("Loss (MSE)")
+plt3.title("Training vs Validation Loss")
+plt3.legend()
+plt3.show()
