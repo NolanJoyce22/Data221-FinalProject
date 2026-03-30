@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsRegressor
@@ -9,7 +10,7 @@ df= pd.read_csv("student-mat.csv")
 
 #------------------------------------------
 #dropping the leakage features
-#----------------------------------------
+#------------------------------------------
 
 #removing two columns from dataframe: G1 and G2 (these are earlier grades and highly correlated with G3)
 #   since keeping them would cause data leakage and inflate model preformance
@@ -17,12 +18,13 @@ df=df.drop(columns=["G1", "G2"])
 
 #--------------------------------------------
 #Feature selection
-#-------------------------------------------
+#--------------------------------------------
 
 #Select only the features relevent to our research question
-selected_features= ["Medu", "Fedu", "Mjob", "Fjob", #Parents background
-                    "address", "Pstatus", "traveltime", "internet", #Living conditions
-                    'famsup', "famsize", "famrel"] #Family demographics
+#features added are absences, studytime and schoolsup to make the features more 'Academic'
+selected_features= ["Medu", "Fedu", "Mjob", "Fjob",
+                    "address", "traveltime", "studytime","failures","absences", "internet",
+                    'famsup', "schoolsup", "famrel"]
 
 #split features x, and target y
 x=df[selected_features] #input variables (predictors)
@@ -34,7 +36,8 @@ y=df["G3"] #target variable (final grade)
 
 
 #Indentifying categorical columns manually
-categorical_cols= ['Mjob', 'Fjob', 'address', "Pstatus", "famsup", "internet", "famsize"]
+#i removed Pstatus and famsize and instead added schoolsup to make the model more lean
+categorical_cols= ['Mjob', 'Fjob', 'address', "famsup", "internet", "schoolsup"]
 
 #Apply one-hot encoding:
 #   this converts categorical values into binary (0/1) columns
@@ -72,7 +75,8 @@ x_test=scaler.transform(x_test)
 #train KNN model
 #---------------------------------------------
 
-knn= KNeighborsRegressor(n_neighbors=5)
+#increased the number of neighbors
+knn= KNeighborsRegressor(n_neighbors=15)
 knn.fit(x_train,y_train)
 
 #--------------------------------------------
@@ -94,4 +98,40 @@ print("RMSE:", rmse)
 print("R2 Score:", r2)
 
 print("Sample Predictions:", y_pred[:5])
+
+#-------------------Scatter plot------------------------
+#shows the error (actual-predicted) for each guess
+residuals=y_test-y_pred
+
+plt.figure(figsize=(8,6))
+plt.scatter(y_pred, residuals, alpha=0.6, color='purple')
+
+#horizontal line at 0 indicating no error
+plt.axhline(y=0, color='black', linestyle='-')
+
+plt.xlabel("Predicted Values (G3)")
+plt.ylabel("Residuals (Actual- Predicted)")
+plt.title("Residual Plot (KNN Regression Model")
+plt.show()
+
+
+
+
+
+#------------Graph comparison-------------------
+
+plt.figure(figsize=(8,6))
+#creating scatter plot
+plt.scatter(y_test, y_pred, alpha=0.6, color='blue')
+
+#creating the diagonal 'perfect prediction' line
+plt.plot([y_test.min(), y_test.max()],
+         [y_test.min(), y_test.max()],
+         color='red', linestyle='--')
+
+#labels and title
+plt.xlabel("Actual Values (G3)")
+plt.ylabel("Predicted Values (G3)")
+plt.title("Actual vs Predicted (KNN Regression Model)")
+plt.show()
 
