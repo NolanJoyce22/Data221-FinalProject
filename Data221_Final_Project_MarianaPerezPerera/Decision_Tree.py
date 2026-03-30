@@ -2,7 +2,7 @@
 from pyexpat import model
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.metrics import accuracy_score, mean_squared_error
+from sklearn.metrics import accuracy_score, mean_squared_error, mean_absolute_error
 from sklearn.tree import plot_tree
 import pandas as pd
 from sklearn.metrics import r2_score
@@ -10,9 +10,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #loading in the dataset:
-student_alcohol_df = pd.read_csv(r'C:\Users\maria\Documents\School\Data221\Data 221-Final Project\student-mat.csv')
+student_alcohol_dataFrame = pd.read_csv(r'C:\Users\maria\Documents\School\Data221\Data 221-Final Project\student-mat.csv')
 
-#selecting the propper/key features we are using:
+#selecting the propper/key features we are using and creating the feature matrix:
 selected_features = [
     #the parents background:
     'Medu', 'Fedu', 'Mjob', 'Fjob',
@@ -23,11 +23,11 @@ selected_features = [
 ]
 
 #creating the target variable which is G3:
-target_variable = 'G3'
+target_variable ='G3'
 
-#now we have make sure we are not including everything else (removing the leakage)
-x = student_alcohol_df[selected_features]
-y= student_alcohol_df[target_variable]
+# #now we have make sure we are not including everything else (removing the leakage)
+x = student_alcohol_dataFrame[selected_features]
+y= student_alcohol_dataFrame[target_variable]
 
 #converting the categorical values into numerical:
 #converting address: (U-values=1 and R-values=0)
@@ -76,19 +76,26 @@ train_rmse = np.sqrt(train_mse)
 test_mse = mean_squared_error(y_test, test_predictions)
 test_rmse = np.sqrt(test_mse)
 
-
+#R-squared:
 #train:
 train_r2 = r2_score(y_train, train_predictions)
 #test:
 test_r2 = r2_score(y_test, test_predictions)
 
+#Mean absolute error on testing data:
+test_mae = mean_absolute_error(y_test, test_predictions)
+
 #printing each one:
-#training and testing RMSE:
-print("The training mean squared error is ", train_rmse)
-print("The test mean squared error is ", test_rmse)
-#training and test R squared:
-print("\nThe training r-squared is ", train_r2)
-print("The test r-squared is ", test_r2)
+#squared error:
+print("Test squared error: ", test_mse)
+#root MSE: (will penalize big errors)
+print("Test mean squared error: ", test_rmse)
+#average error size:
+print("Test mean absolute error: ", test_mae)
+#the overall performance:
+print("Test R²: ", test_r2)
+
+#The model overall is worse at predicting the average grade
 
 #feature importance:
 importance = pd.Series(
@@ -99,6 +106,9 @@ importance = pd.Series(
 #printing the importance:
 print("\nThe feature importance:\n", importance)
 
+
+#----------------------------------------------------------------
+#Visuals:
 #Plotting the importance features on a bar graph:
 importance.plot(kind= 'bar', color="pink")
 plt.title("Decision Tree Feature Importance")
@@ -109,13 +119,20 @@ plt.show()
 
 #Plotting the predicted vs actual results on a scatter plot:
 plt.scatter(y_test, test_predictions, color='pink')
-plt.xlabel('Actual G3')
-plt.ylabel('Predicted G3')
-plt.title("The Actual vs Predicted Grades")
-
+plt.xlabel('Actual Values (G3)')
+plt.ylabel('Predicted Values (G3)')
+plt.title("The Actual vs Predicted Grades (Decision Tree)")
 #plotting the line of perfection:
-plt.plot([y.min(), y.max()], [y.min(), y.max()], color='green')
+plt.plot([y.min(), y.max()], [y.min(), y.max()], color='green', linestyle='--')
 plt.show()
+
+#creating a residual plot:
+residuals = y_test - test_predictions
+plt.scatter(test_predictions, residuals, color='pink')
+plt.axhline(y=0, color='green')
+plt.title("Residual Plot (Decision Tree)")
+plt.xlabel('Predicted Values')
+plt.ylabel('Residuals (Actual - Predicted)')
 
 #Creating a Decision Tree Visualization:
 plt.figure(figsize = (25,15))
