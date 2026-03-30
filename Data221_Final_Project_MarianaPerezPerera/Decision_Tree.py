@@ -109,12 +109,12 @@ plt.show()
 
 #Plotting the predicted vs actual results on a scatter plot:
 plt.scatter(y_test, test_predictions, color='pink')
-plt.xlabel('Actual G3')
-plt.ylabel('Predicted G3')
+plt.xlabel('Actual Values (G3)')
+plt.ylabel('Predicted Values (G3)')
 plt.title("The Actual vs Predicted Grades")
 
 #plotting the line of perfection:
-plt.plot([y.min(), y.max()], [y.min(), y.max()], color='green')
+plt.plot([y.min(), y.max()], [y.min(), y.max()], color='green', linestyle='--')
 plt.show()
 
 #Creating a Decision Tree Visualization:
