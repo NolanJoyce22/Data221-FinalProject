@@ -121,11 +121,18 @@ plt.show()
 plt.scatter(y_test, test_predictions, color='pink')
 plt.xlabel('Actual Values (G3)')
 plt.ylabel('Predicted Values (G3)')
-plt.title("The Actual vs Predicted Grades")
-
+plt.title("The Actual vs Predicted Grades (Decision Tree)")
 #plotting the line of perfection:
 plt.plot([y.min(), y.max()], [y.min(), y.max()], color='green', linestyle='--')
 plt.show()
+
+#creating a residual plot:
+residuals = y_test - test_predictions
+plt.scatter(test_predictions, residuals, color='pink')
+plt.axhline(y=0, color='green')
+plt.title("Residual Plot (Decision Tree)")
+plt.xlabel('Predicted Values')
+plt.ylabel('Residuals (Actual - Predicted)')
 
 #Creating a Decision Tree Visualization:
 plt.figure(figsize = (25,15))
