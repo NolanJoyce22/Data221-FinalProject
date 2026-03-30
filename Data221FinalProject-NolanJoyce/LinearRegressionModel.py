@@ -1,5 +1,4 @@
 import pandas as pd
-from keras.src.losses import mean_absolute_error
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score, mean_squared_error
@@ -53,17 +52,17 @@ print("Coefficients:", model.coef_)
 
 # Scatter plot: Actual Vs Predicted
 plt.figure()
-plt.scatter(y_test, y_pred, alpha = 0.6)
+plt.scatter(y_test, y_pred, color = "Red", alpha = 0.6)
 
 # Perfect prediction line (y = x)
 plt.plot([y_test.min(), y_test.max()],
          [y_test.min(), y_test.max()],
-         linestyle="--")
+         linestyle="--", color = "Blue")
 
 # Labels and title
 plt.xlabel("Actual Values (G3)")
 plt.ylabel("Predicted Values (G3)")
-plt.title("actual vs Predicted (Linear Regression)")
+plt.title("Actual vs Predicted (Linear Regression)")
 
 plt.show()
 
@@ -77,10 +76,10 @@ plt.show()
 residuals = y_test - y_pred
 
 plt.figure()
-plt.scatter(y_pred, residuals, alpha=0.6)
+plt.scatter(y_pred, residuals, color = "Red", alpha=0.6)
 
 # Horizontal line at 0
-plt.axhline(y=0)
+plt.axhline(y=0, color = "Blue")
 
 plt.xlabel("Predicted Values")
 plt.ylabel("Residuals (Actual - Predicted)")
