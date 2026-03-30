@@ -176,3 +176,6 @@ plt3.ylabel("Loss (MSE)")
 plt3.title("Training vs Validation Loss")
 plt3.legend()
 plt3.show()
+
+#get model summary
+neural_network_model.summary()
